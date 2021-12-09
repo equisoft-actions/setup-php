@@ -1,0 +1,54 @@
+name: setup-php
+description: |
+  Setup PHP with extensions
+
+  See https://github.com/shivammathur/setup-php
+
+inputs:
+  php-version:
+    description: 'Setup PHP version.'
+    default: '7.4'
+    required: false
+  extensions:
+    description: 'Setup PHP extensions.'
+    required: false
+  ini-values:
+    description: 'Add values to php.ini.'
+    required: false
+  coverage:
+    description: 'Setup code coverage driver.'
+    required: false
+  tools:
+    description: 'Setup popular tools globally.'
+    required: false
+  cache-key:
+    description: 'Cache key ex: v1'
+    default: 'v1'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup cache environment
+      id: extcache
+      uses: shivammathur/cache-extensions@v1
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: ${{ inputs.extensions }}
+        key: ${{ inputs.cache-key }}
+
+    - name: Cache extensions
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.extcache.outputs.dir }}
+        key: ${{ steps.extcache.outputs.key }}
+        restore-keys: ${{ steps.extcache.outputs.key }}
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: ${{ inputs.extensions }}
+        ini-values: ${{ inputs.ini-values }}
+        coverage: ${{ inputs.coverage }}
+        tools: ${{ inputs.tools }}
