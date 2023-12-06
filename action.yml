@@ -34,9 +34,9 @@ runs:
       shell: bash
       run:
         if [[ -z "${{ inputs.extensions }}" ]]; then
-          echo "php-extensions=${{ inputs.extensions }},:psr" > $GITHUB_OUTPUT
+          echo "php-extensions=:psr" >> "$GITHUB_OUTPUT"
         else
-          echo "php-extensions=:psr" > $GITHUB_OUTPUT
+          echo "php-extensions=${{ inputs.extensions }},:psr" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Setup cache environment
