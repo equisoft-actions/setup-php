@@ -41,7 +41,7 @@ runs:
 
     - name: Setup cache environment
       id: extcache
-      uses: shivammathur/cache-extensions@793aad6c07ef210afdc8a4b043db331546f1854f # v1
+      uses: shivammathur/cache-extensions@256729b5fef535345e27904657f78048c0990f81 # v1
       with:
         php-version: ${{ inputs.php-version }}
         extensions: ${{ steps.extensions.outputs.php-extensions }}
